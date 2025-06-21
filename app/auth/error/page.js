@@ -1,16 +1,15 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 
-export default function AuthError() {
+function ErrorContent() {
   const searchParams = useSearchParams();
   const [error, setError] = useState('');
 
   useEffect(() => {
     const errorType = searchParams.get('error');
-
     switch (errorType) {
       case 'AccessDenied':
         setError('access_denied');
@@ -32,31 +31,31 @@ export default function AuthError() {
         return {
           title: 'Access Not Authorized',
           message: 'Your GitLab account is not yet registered in our system.',
-          description: 'To gain access, you need to be pre-registered by an admin or mentor.',
+          description: 'To gain access, you need to be pre-registered.',
           icon: '🚫',
           color: 'red'
         };
       case 'configuration':
         return {
           title: 'Configuration Error',
-          message: 'There was a problem with authentication configuration.',
-          description: 'Please contact the system administrator.',
+          message: 'Problem with authentication config.',
+          description: 'Contact the admin.',
           icon: '⚙️',
           color: 'yellow'
         };
       case 'verification':
         return {
           title: 'Verification Failed',
-          message: 'Unable to verify your GitLab account.',
-          description: 'Please try again or contact support.',
+          message: 'GitLab verification failed.',
+          description: 'Try again or contact support.',
           icon: '❌',
           color: 'red'
         };
       default:
         return {
           title: 'Authentication Error',
-          message: 'An unexpected error occurred.',
-          description: 'Please try again or contact support.',
+          message: 'Unexpected error occurred.',
+          description: 'Try again later.',
           icon: '⚠️',
           color: 'yellow'
         };
@@ -64,7 +63,6 @@ export default function AuthError() {
   };
 
   const errorContent = getErrorContent();
-
   const colorClasses = {
     red: {
       bg: 'bg-red-50',
@@ -84,66 +82,24 @@ export default function AuthError() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+      {/* Your existing JSX using errorContent */}
+      <div className="text-center">
         <span className="text-6xl">{errorContent.icon}</span>
         <h2 className="mt-6 text-3xl font-bold text-gray-900">
           {errorContent.title}
         </h2>
+        <p className="mt-4 text-sm text-gray-600">{errorContent.message}</p>
+        <p className="text-xs text-gray-400">{errorContent.description}</p>
       </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className={`${colors.bg} ${colors.border} border rounded-lg shadow-sm p-6`}>
-          <div className="text-center">
-            <h3 className={`text-lg font-medium ${colors.text} mb-2`}>
-              {errorContent.message}
-            </h3>
-            <p className="text-sm text-gray-600 mb-6">
-              {errorContent.description}
-            </p>
-
-            {error === 'access_denied' && (
-              <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6 text-left">
-                <h4 className="font-medium text-gray-900 mb-2">How to get access:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• <strong>For Interns:</strong> Ask your mentor to add your GitLab username.</li>
-                  <li>• <strong>For Mentors:</strong> Contact an admin to register your username.</li>
-                  <li>• <strong>For Admins:</strong> Contact the system administrator.</li>
-                </ul>
-              </div>
-            )}
-
-            <div className="space-y-3">
-              <Link
-                href="/"
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${colors.button} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
-              >
-                Return to Homepage
-              </Link>
-              <button
-                onClick={() => window.location.reload()}
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Try Again
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 text-center text-xs text-gray-500">
-          Need help? Contact your system administrator or mentor.
-        </div>
-      </div>
-
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 text-xs text-gray-600 space-y-1">
-            <h4 className="font-medium text-gray-900 mb-2">Debug Info:</h4>
-            <div>Error Type: {error}</div>
-            <div>Search Params: {searchParams.toString()}</div>
-            <div>Timestamp: {new Date().toISOString()}</div>
-          </div>
-        </div>
-      )}
     </div>
+  );
+}
+
+// ✅ Wrap in Suspense
+export default function AuthError() {
+  return (
+    <Suspense fallback={<div className="text-center mt-12 text-gray-600">Loading error info...</div>}>
+      <ErrorContent />
+    </Suspense>
   );
 }
