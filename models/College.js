@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define schema
 const collegeSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -24,7 +25,6 @@ const collegeSchema = new mongoose.Schema({
   },
   mentorUsername: {
     type: String,
-    required: false,
     trim: true,
     lowercase: true,
     default: 'unassigned'
@@ -50,12 +50,12 @@ const collegeSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Indexes
-collegeSchema.index({ name: 1 });
-collegeSchema.index({ mentorUsername: 1 });
-collegeSchema.index({ isActive: 1 });
+// Indexes (only defined once, not duplicated)
+collegeSchema.index({ name: 1 });              // Ensures fast lookup by name
+collegeSchema.index({ mentorUsername: 1 });    // For mentor assignments
+collegeSchema.index({ isActive: 1 });          // For filtering active colleges
 
-// Virtual for mentor details
+// Virtual: Mentor details
 collegeSchema.virtual('mentor', {
   ref: 'User',
   localField: 'mentorUsername',
@@ -63,7 +63,7 @@ collegeSchema.virtual('mentor', {
   justOne: true
 });
 
-// Virtual for interns count
+// Virtual: Intern count per college
 collegeSchema.virtual('internsCount', {
   ref: 'User',
   localField: '_id',
@@ -72,41 +72,42 @@ collegeSchema.virtual('internsCount', {
   match: { role: 'intern', isActive: true }
 });
 
-// Ensure virtual fields are serialized
+// Serialize virtuals
 collegeSchema.set('toJSON', { virtuals: true });
 
-// Pre-save middleware
-collegeSchema.pre('save', function(next) {
+// Pre-save hook to update timestamp
+collegeSchema.pre('save', function (next) {
   this.updatedAt = new Date();
   next();
 });
 
-// Static methods
-collegeSchema.statics.findByMentor = function(mentorUsername) {
-  return this.findOne({ 
-    mentorUsername: mentorUsername.toLowerCase(), 
-    isActive: true 
+// Reuse User model safely
+const User = mongoose.models.User || mongoose.model('User');
+
+// Static Methods
+collegeSchema.statics.findByMentor = function (mentorUsername) {
+  return this.findOne({
+    mentorUsername: mentorUsername.toLowerCase(),
+    isActive: true
   }).populate('mentor');
 };
 
-collegeSchema.statics.getAllActive = function() {
+collegeSchema.statics.getAllActive = function () {
   return this.find({ isActive: true })
     .populate('mentor')
     .populate('internsCount');
 };
 
-// Instance methods
-collegeSchema.methods.getInterns = function() {
-  const User = mongoose.model('User');
-  return User.find({ 
-    college: this._id, 
-    role: 'intern', 
-    isActive: true 
+// Instance Methods
+collegeSchema.methods.getInterns = function () {
+  return User.find({
+    college: this._id,
+    role: 'intern',
+    isActive: true
   });
 };
 
-collegeSchema.methods.addIntern = function(internData) {
-  const User = mongoose.model('User');
+collegeSchema.methods.addIntern = function (internData) {
   return new User({
     ...internData,
     role: 'intern',
@@ -114,4 +115,5 @@ collegeSchema.methods.addIntern = function(internData) {
   }).save();
 };
 
+// Export model
 export default mongoose.models.College || mongoose.model('College', collegeSchema);
