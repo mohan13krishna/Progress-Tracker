@@ -5,6 +5,8 @@ import { connectToDatabase } from '../../../../../utils/database.js';
 import College from '../../../../../models/College.js';
 import User from '../../../../../models/User.js';
 
+export const dynamic = 'force-dynamic';
+
 export async function PUT(request, { params }) {
   try {
     const session = await getServerSession(authOptions);
