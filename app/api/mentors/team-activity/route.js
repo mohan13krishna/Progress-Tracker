@@ -1,10 +1,11 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/route.js';
 import { getUserByGitLabId, getCohortsByMentor, connectToDatabase } from '../../../../utils/database.js';
 import ActivityTracking from '../../../../models/ActivityTracking.js';
 import GitLabIntegration from '../../../../models/GitLabIntegration.js';
-export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/mentors/team-activity
  * Get team activity overview for mentors
