@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   college: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'College',
-    required: function() {
+    required: function () {
       return this.role === 'intern';
     }
   },
@@ -66,9 +66,7 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Indexes for better performance
-userSchema.index({ gitlabUsername: 1 });
-userSchema.index({ gitlabId: 1 });
+// ✅ Keep only non-redundant indexes
 userSchema.index({ role: 1 });
 userSchema.index({ college: 1 });
 
@@ -84,17 +82,17 @@ userSchema.virtual('collegeName', {
 userSchema.set('toJSON', { virtuals: true });
 
 // Pre-save middleware to update timestamps
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   this.updatedAt = new Date();
   next();
 });
 
 // Static methods
-userSchema.statics.findByGitLabUsername = function(username) {
+userSchema.statics.findByGitLabUsername = function (username) {
   return this.findOne({ gitlabUsername: username.toLowerCase(), isActive: true });
 };
 
-userSchema.statics.findByRole = function(role, collegeId = null) {
+userSchema.statics.findByRole = function (role, collegeId = null) {
   const query = { role, isActive: true };
   if (collegeId) {
     query.college = collegeId;
@@ -102,15 +100,15 @@ userSchema.statics.findByRole = function(role, collegeId = null) {
   return this.find(query).populate('college');
 };
 
-userSchema.statics.getAdmins = function() {
+userSchema.statics.getAdmins = function () {
   return this.find({ role: 'admin', isActive: true });
 };
 
-userSchema.statics.getMentorsByCollege = function(collegeId) {
+userSchema.statics.getMentorsByCollege = function (collegeId) {
   return this.find({ role: 'mentor', college: collegeId, isActive: true }).populate('college');
 };
 
-userSchema.statics.getInternsByMentor = function(mentorUsername) {
+userSchema.statics.getInternsByMentor = function (mentorUsername) {
   return this.findOne({ gitlabUsername: mentorUsername, role: 'mentor' })
     .populate('college')
     .then(mentor => {
@@ -120,7 +118,7 @@ userSchema.statics.getInternsByMentor = function(mentorUsername) {
 };
 
 // Instance methods
-userSchema.methods.canManageUser = function(targetUser) {
+userSchema.methods.canManageUser = function (targetUser) {
   if (this.role === 'admin') return true;
   if (this.role === 'mentor' && targetUser.role === 'intern') {
     return this.college.toString() === targetUser.college.toString();
@@ -128,7 +126,7 @@ userSchema.methods.canManageUser = function(targetUser) {
   return false;
 };
 
-userSchema.methods.canAccessCollege = function(collegeId) {
+userSchema.methods.canAccessCollege = function (collegeId) {
   if (this.role === 'admin') return true;
   if (this.role === 'mentor' || this.role === 'intern') {
     return this.college.toString() === collegeId.toString();
@@ -136,7 +134,7 @@ userSchema.methods.canAccessCollege = function(collegeId) {
   return false;
 };
 
-userSchema.methods.updateLastLogin = function() {
+userSchema.methods.updateLastLogin = function () {
   this.lastLoginAt = new Date();
   return this.save();
 };
