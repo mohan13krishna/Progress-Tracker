@@ -1,4 +1,4 @@
-# 🎓 GitLab-integrated Internship Tracker (Next.js)          
+# 🎓 GitLab-integrated Internship Tracker (Next.js)             
 
 A comprehensive platform for managing internships with GitLab OAuth integration, built with Next.js, NextAuth.js, and MongoDB. 
 
