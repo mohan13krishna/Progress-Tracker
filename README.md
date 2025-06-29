@@ -5,7 +5,7 @@ A comprehensive platform for managing internships with GitLab OAuth integration,
 ## 🚀 Features
 
 ### ✅ Implemented Features      
-   
+    
 #### 🔐 Authentication & Onboarding
 - **GitLab OAuth Integration**: Secure login with GitLab accounts using NextAuth.js
 - **Role-based Access**: Separate flows for Mentors and Interns
