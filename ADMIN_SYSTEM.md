@@ -6,7 +6,7 @@ This document describes the new admin-controlled role assignment system for the 
 
 ### Role Hierarchy
 ```
-ADMIN (Super User)
+ADMIN (Super User)       
 ├── Can add other Admins (by GitLab username)
 ├── Can add/manage Mentors
 ├── Can create/manage Colleges
