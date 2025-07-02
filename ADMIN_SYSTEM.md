@@ -1,5 +1,5 @@
 # Admin-Controlled Role System
-
+   
 This document describes the new admin-controlled role assignment system for the Internship Tracker platform.
 
 ## 🏗️ System Architecture
