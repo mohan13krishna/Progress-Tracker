@@ -2,7 +2,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 
 let client;
-let clientPromise;
+let clientPromise;  
 
 if (process.env.MONGODB_URI) {
   client = new MongoClient(process.env.MONGODB_URI);
