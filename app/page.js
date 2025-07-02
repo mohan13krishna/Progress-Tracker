@@ -4,7 +4,7 @@ import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';   
 import { useState, useEffect } from 'react';
 import Link from 'next/link';    
-
+     
 export default function Home() {     
   const { data: session, status } = useSession();   
   const router = useRouter();
