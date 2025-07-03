@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';   
 import { useEffect, useState } from 'react';
-import { signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react'; 
 import GitLabIntegration from '../../../components/dashboard/GitLabIntegration.js';   
   
 export default function InternDashboard() {  
