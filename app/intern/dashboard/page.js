@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import GitLabIntegration from '../../../components/dashboard/GitLabIntegration.js';   
- 
+  
 export default function InternDashboard() { 
   const { data: session, status } = useSession();
   const router = useRouter(); 
