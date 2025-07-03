@@ -9,7 +9,7 @@ import GitLabIntegration from '../../../components/dashboard/GitLabIntegration.j
 export default function InternDashboard() { 
   const { data: session, status } = useSession();
   const router = useRouter(); 
-  const [joinRequests, setJoinRequests] = useState([]);
+  const [joinRequests, setJoinRequests] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [demoMode, setDemoMode] = useState(false);
