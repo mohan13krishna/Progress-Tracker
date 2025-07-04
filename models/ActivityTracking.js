@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 /**
  * Activity Tracking Schema
- * Stores detailed GitLab activity data for analytics and progress tracking
+ * Stores detailed GitLab activity data for analytics and progress tracking 
  */
 const ActivityTrackingSchema = new mongoose.Schema({
   // User identification
