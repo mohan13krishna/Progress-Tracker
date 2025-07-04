@@ -9,7 +9,7 @@ const ActivityTrackingSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User',
-    required: true
+    required: true 
   },
 
   // Activity type and identification
