@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 const ActivityTrackingSchema = new mongoose.Schema({
   // User identification
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, 
     ref: 'User',
     required: true
   },
