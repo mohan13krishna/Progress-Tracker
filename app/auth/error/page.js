@@ -5,7 +5,7 @@ import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
  
 function ErrorContent() { 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); 
   const [error, setError] = useState('');
 
   useEffect(() => {
