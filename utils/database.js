@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 let client;  
 let clientPromise;   
- 
+  
 if (process.env.MONGODB_URI) {
   client = new MongoClient(process.env.MONGODB_URI);  
   clientPromise = client.connect();    
