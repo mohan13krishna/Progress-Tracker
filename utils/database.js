@@ -5,7 +5,7 @@ let client;
 let clientPromise;  
  
 if (process.env.MONGODB_URI) {
-  client = new MongoClient(process.env.MONGODB_URI); 
+  client = new MongoClient(process.env.MONGODB_URI);  
   clientPromise = client.connect();    
 } else {
   console.warn('No MongoDB URI provided, using demo mode');
