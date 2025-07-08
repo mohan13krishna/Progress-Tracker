@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { mockData } from '../../utils/mockData'; 
  
 export function CategoriesTab() {  
-  const [categories, setCategories] = useState([]);   
+  const [categories, setCategories] = useState([]);    
   const [tasks, setTasks] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);  
   const [editingCategory, setEditingCategory] = useState(null);
