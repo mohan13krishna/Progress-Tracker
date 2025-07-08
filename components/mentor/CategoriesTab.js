@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { mockData } from '../../utils/mockData';
+import { mockData } from '../../utils/mockData'; 
  
 export function CategoriesTab() { 
   const [categories, setCategories] = useState([]);
