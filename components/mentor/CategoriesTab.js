@@ -15,7 +15,7 @@ export function CategoriesTab() {
     '#06B6D4', '#84CC16', '#F97316', '#EC4899', '#6366F1'
   ];
 
-  useEffect(() => {
+  useEffect(() => { 
     setCategories(mockData.categories);
     setTasks(mockData.tasks);
   }, []);
