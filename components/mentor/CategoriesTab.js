@@ -6,7 +6,7 @@ import { mockData } from '../../utils/mockData';
 export function CategoriesTab() { 
   const [categories, setCategories] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false); 
   const [editingCategory, setEditingCategory] = useState(null);
   const [selectedColor, setSelectedColor] = useState('#3B82F6');
 
