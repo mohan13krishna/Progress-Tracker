@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
  
-/**
+/** 
  * GitLab Integration Schema
  * Stores encrypted OAuth tokens and repository tracking preferences 
  */
