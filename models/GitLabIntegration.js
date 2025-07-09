@@ -7,7 +7,7 @@
 const GitLabIntegrationSchema = new mongoose.Schema({  
   // User identification  
   userId: {
-    type: mongoose.Schema.Types.ObjectId, 
+    type: mongoose.Schema.Types.ObjectId,  
     ref: 'User',
     required: true, 
     unique: true
