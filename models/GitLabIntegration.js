@@ -5,7 +5,7 @@
  * Stores encrypted OAuth tokens and repository tracking preferences  
  */ 
 const GitLabIntegrationSchema = new mongoose.Schema({
-  // User identification
+  // User identification 
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
